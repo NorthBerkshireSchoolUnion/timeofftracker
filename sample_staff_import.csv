@@ -1,0 +1,23 @@
+First Name,Last Name,Email,District,Position,Start Date,Status
+# This is a sample CSV file for importing staff data into the TimeOff Tracker system
+# Required fields: First Name, Last Name, Email, District
+# Optional fields: Position, Start Date, Status
+# Note: This file is compatible with PowerSchool exports
+# You can use this as a template for your own imports
+
+John,Smith,john.smith@school.edu,Clarksburg,Teacher,2022-08-15,active
+Maria,Rodriguez,m.rodriguez@school.edu,Florida,Principal,2020-06-01,active
+David,Johnson,d.johnson@school.edu,Monroe,Administrative Assistant,2023-01-10,active
+Sarah,Williams,s.williams@school.edu,Savoy,Teacher,2021-09-05,active
+Michael,Brown,m.brown@school.edu,Clarksburg,Guidance Counselor,2019-11-20,active
+
+# PowerSchool export compatibility notes:
+# - If your PowerSchool export uses different field names, you can map them during import
+# - Common PowerSchool field mappings:
+#   * FIRST_NAME or FIRST maps to First Name
+#   * LAST_NAME or LAST maps to Last Name
+#   * EMAIL or EMAIL_ADDR maps to Email
+#   * SCHOOL_NAME or SCHOOL maps to District
+#   * TITLE or POSITION maps to Position
+#   * HIRE_DATE maps to Start Date
+#   * STATUS or TEACHER_STATUS maps to Status

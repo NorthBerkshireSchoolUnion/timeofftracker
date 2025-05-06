@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Import Test</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .test-container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .test-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .test-button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        .error {
+            border-left-color: #e74c3c;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Staff Import Functionality Test</h1>
+    
+    <div class="test-container">
+        <h2>Test 1: Parse CSV File</h2>
+        <p>Tests the CSV parsing functionality with the sample file.</p>
+        <button id="test-parse" class="test-button">Run Test</button>
+        <div id="parse-result" class="result" style="display: none;"></div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test 2: Field Mapping</h2>
+        <p>Tests the field mapping functionality for PowerSchool compatibility.</p>
+        <button id="test-mapping" class="test-button">Run Test</button>
+        <div id="mapping-result" class="result" style="display: none;"></div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test 3: Data Integration</h2>
+        <p>Tests the integration of imported data with existing data.</p>
+        <button id="test-integration" class="test-button">Run Test</button>
+        <div id="integration-result" class="result" style="display: none;"></div>
+    </div>
+    
+    <script>
+        // Mock employee data for testing
+        const employeeData = {
+            employees: [
+                {
+                    id: 1,
+                    firstName: "Alex",
+                    lastName: "Johnson",
+                    email: "alex.j@company.com",
+                    department: "engineering",
+                    position: "Senior Developer",
+                    startDate: "2020-03-15",
+                    status: "active",
+                    timeOff: {
+                        vacation: { total: 20, used: 6, remaining: 14 },
+                        personal: { total: 5, used: 0, remaining: 5 },
+                        sick: { total: 10, used: 2, remaining: 8 }
+                    },
+                    requests: []
+                }
+            ]
+        };
+        
+        // Test 1: Parse CSV File
+        document.getElementById('test-parse').addEventListener('click', async function() {
+            const resultDiv = document.getElementById('parse-result');
+            resultDiv.innerHTML = 'Loading...';
+            resultDiv.style.display = 'block';
+            
+            try {
+                const response = await fetch('sample_staff_import.csv');
+                const content = await response.text();
+                
+                // Simple CSV parser for testing
+                const lines = content.split(/\r?\n/).filter(line => line.trim() !== '' && !line.startsWith('#'));
+                const headers = lines[0].split(',').map(h => h.trim());
+                
+                const data = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const row = lines[i].split(',').map(cell => cell.trim());
+                    if (row.length === headers.length) {
+                        const rowObj = {};
+                        headers.forEach((header, index) => {
+                            rowObj[header] = row[index];
+                        });
+                        data.push(rowObj);
+                    }
+                }
+                
+                resultDiv.innerHTML = `
+                    <h3>Parsing Successful</h3>
+                    <p>Headers: ${headers.join(', ')}</p>
+                    <p>Rows parsed: ${data.length}</p>
+                    <h4>Sample Data:</h4>
+                    <pre>${JSON.stringify(data[0], null, 2)}</pre>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<h3>Error</h3><p>${error.message}</p>`;
+                resultDiv.classList.add('error');
+            }
+        });
+        
+        // Test 2: Field Mapping
+        document.getElementById('test-mapping').addEventListener('click', function() {
+            const resultDiv = document.getElementById('mapping-result');
+            resultDiv.style.display = 'block';
+            
+            // PowerSchool field mappings
+            const powerSchoolMappings = {
+                'FIRST_NAME': 'firstName',
+                'LAST_NAME': 'lastName',
+                'EMAIL_ADDR': 'email',
+                'SCHOOL_NAME': 'department',
+                'TITLE': 'position',
+                'HIRE_DATE': 'startDate',
+                'TEACHER_STATUS': 'status'
+            };
+            
+            // Test data with PowerSchool field names
+            const testData = [
+                {
+                    'FIRST_NAME': 'John',
+                    'LAST_NAME': 'Smith',
+                    'EMAIL_ADDR': 'john.smith@school.edu',
+                    'SCHOOL_NAME': 'Clarksburg',
+                    'TITLE': 'Teacher',
+                    'HIRE_DATE': '2022-08-15',
+                    'TEACHER_STATUS': 'active'
+                }
+            ];
+            
+            // Map PowerSchool fields to application fields
+            const mappedData = testData.map(record => {
+                const mappedRecord = {};
+                
+                for (const [psField, value] of Object.entries(record)) {
+                    const appField = powerSchoolMappings[psField];
+                    if (appField) {
+                        mappedRecord[appField] = value;
+                    } else {
+                        mappedRecord[psField] = value; // Keep unmapped fields
+                    }
+                }
+                
+                return mappedRecord;
+            });
+            
+            resultDiv.innerHTML = `
+                <h3>Field Mapping Test</h3>
+                <h4>Original PowerSchool Data:</h4>
+                <pre>${JSON.stringify(testData[0], null, 2)}</pre>
+                <h4>Mapped to Application Fields:</h4>
+                <pre>${JSON.stringify(mappedData[0], null, 2)}</pre>
+            `;
+        });
+        
+        // Test 3: Data Integration
+        document.getElementById('test-integration').addEventListener('click', function() {
+            const resultDiv = document.getElementById('integration-result');
+            resultDiv.style.display = 'block';
+            
+            // New staff data to integrate
+            const newStaff = [
+                {
+                    firstName: "Maria",
+                    lastName: "Rodriguez",
+                    email: "m.rodriguez@school.edu",
+                    department: "Florida",
+                    position: "Principal",
+                    startDate: "2020-06-01",
+                    status: "active"
+                },
+                {
+                    firstName: "Alex", // Existing employee (same email)
+                    lastName: "Johnson",
+                    email: "alex.j@company.com",
+                    department: "engineering",
+                    position: "Lead Developer", // Updated position
+                    startDate: "2020-03-15",
+                    status: "active"
+                }
+            ];
+            
+            // Clone employee data for testing
+            const testEmployeeData = JSON.parse(JSON.stringify(employeeData));
+            
+            // Process each new staff member
+            const results = {
+                added: 0,
+                updated: 0,
+                skipped: 0
+            };
+            
+            newStaff.forEach(staff => {
+                const existingIndex = testEmployeeData.employees.findIndex(
+                    emp => emp.email.toLowerCase() === staff.email.toLowerCase()
+                );
+                
+                if (existingIndex !== -1) {
+                    // Update existing employee
+                    const existing = testEmployeeData.employees[existingIndex];
+                    existing.firstName = staff.firstName;
+                    existing.lastName = staff.lastName;
+                    existing.department = staff.department;
+                    existing.position = staff.position;
+                    existing.startDate = staff.startDate;
+                    existing.status = staff.status;
+                    results.updated++;
+                } else {
+                    // Add new employee
+                    const newEmployee = {
+                        id: testEmployeeData.employees.length + 1,
+                        firstName: staff.firstName,
+                        lastName: staff.lastName,
+                        email: staff.email,
+                        department: staff.department,
+                        position: staff.position,
+                        startDate: staff.startDate,
+                        status: staff.status,
+                        timeOff: {
+                            vacation: { total: 0, used: 0, remaining: 0 },
+                            personal: { total: 0, used: 0, remaining: 0 },
+                            sick: { total: 0, used: 0, remaining: 0 }
+                        },
+                        requests: []
+                    };
+                    
+                    testEmployeeData.employees.push(newEmployee);
+                    results.added++;
+                }
+            });
+            
+            resultDiv.innerHTML = `
+                <h3>Data Integration Test</h3>
+                <h4>Results:</h4>
+                <p>New staff added: ${results.added}</p>
+                <p>Existing staff updated: ${results.updated}</p>
+                <p>Staff skipped: ${results.skipped}</p>
+                <h4>Updated Employee Data:</h4>
+                <pre>${JSON.stringify(testEmployeeData.employees, null, 2)}</pre>
+            `;
+        });
+    </script>
+</body>
+</html>

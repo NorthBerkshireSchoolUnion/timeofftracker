@@ -1,11 +1,875 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>Links</title>
-    <meta http-equiv="refresh" content="0; url=./project/index.html">
-  </head>
-  <body>
-    <p>If you are not redirected automatically, follow this <a href="./project/index.html">./project/index.html</a>.</p>
-  </body>
-  </html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeOff Tracker | Employee Time-Off Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">TimeOff</h1>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                    <li><a href="#employees"><i class="fas fa-users"></i> <span>Employees</span></a></li>
+                    <li><a href="#requests"><i class="fas fa-calendar-plus"></i> <span>Time-Off Requests</span></a></li>
+                    <li><a href="#calendar"><i class="fas fa-calendar-alt"></i> <span>Calendar</span></a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-info">
+                        <p class="user-name">Admin User</p>
+                        <p class="user-role">HR Manager</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search employees, requests...">
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" title="Notifications"><i class="fas fa-bell"></i></button>
+                    <button class="btn-icon" title="Help"><i class="fas fa-question-circle"></i></button>
+                    <div class="theme-toggle">
+                        <input type="checkbox" id="theme-switch" class="theme-switch">
+                        <label for="theme-switch" class="theme-label">
+                            <i class="fas fa-sun"></i>
+                            <i class="fas fa-moon"></i>
+                        </label>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <div class="date-filter">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-calendar"></i>
+                            <span>May 2025</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card with-animation">
+                        <div class="stat-icon vacation">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Vacation Time</h3>
+                            <p class="stat-value">14 days</p>
+                            <p class="stat-label">Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card with-animation">
+                        <div class="stat-icon personal">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Personal Time</h3>
+                            <p class="stat-value">5 days</p>
+                            <p class="stat-label">Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card with-animation">
+                        <div class="stat-icon sick">
+                            <i class="fas fa-first-aid"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Sick Time</h3>
+                            <p class="stat-value">8 days</p>
+                            <p class="stat-label">Available</p>
+                        </div>
+                    </div>
+                    <div class="stat-card with-animation">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Total Employees</h3>
+                            <p class="stat-value">6</p>
+                            <p class="stat-label">Active</p>
+                        </div>
+                    </div>
+                    <div class="stat-card with-animation">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>On Leave</h3>
+                            <p class="stat-value">1</p>
+                            <p class="stat-label">Currently</p>
+                        </div>
+                    </div>
+                    <div class="stat-card with-animation">
+                        <div class="stat-icon pending">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Pending Requests</h3>
+                            <p class="stat-value">3</p>
+                            <p class="stat-label">Awaiting Approval</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="grid-item upcoming-time-off with-animation">
+                        <div class="card-header">
+                            <h3>Upcoming Time Off</h3>
+                            <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                        <div class="card-content">
+                            <ul class="time-off-list">
+                                <li class="time-off-item">
+                                    <div class="time-off-date">
+                                        <span class="month">May</span>
+                                        <span class="day">15</span>
+                                    </div>
+                                    <div class="time-off-details">
+                                        <p class="time-off-type vacation">Vacation Day</p>
+                                        <p class="time-off-status approved">Approved</p>
+                                    </div>
+                                </li>
+                                <li class="time-off-item">
+                                    <div class="time-off-date">
+                                        <span class="month">May</span>
+                                        <span class="day">16</span>
+                                    </div>
+                                    <div class="time-off-details">
+                                        <p class="time-off-type vacation">Vacation Day</p>
+                                        <p class="time-off-status approved">Approved</p>
+                                    </div>
+                                </li>
+                                <li class="time-off-item">
+                                    <div class="time-off-date">
+                                        <span class="month">Jun</span>
+                                        <span class="day">10</span>
+                                    </div>
+                                    <div class="time-off-details">
+                                        <p class="time-off-type personal">Personal Day</p>
+                                        <p class="time-off-status pending">Pending</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-text">View All</button>
+                        </div>
+                    </div>
+
+                    <div class="grid-item team-calendar with-animation">
+                        <div class="card-header">
+                            <h3>Team Calendar</h3>
+                            <div class="calendar-controls">
+                                <button class="btn-icon"><i class="fas fa-chevron-left"></i></button>
+                                <span>May 2025</span>
+                                <button class="btn-icon"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="mini-calendar">
+                                <div class="calendar-header">
+                                    <span>Sun</span>
+                                    <span>Mon</span>
+                                    <span>Tue</span>
+                                    <span>Wed</span>
+                                    <span>Thu</span>
+                                    <span>Fri</span>
+                                    <span>Sat</span>
+                                </div>
+                                <div class="calendar-body">
+                                    <!-- Calendar days would be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="calendar-legend">
+                                <span class="legend-item"><span class="color-dot vacation"></span> Vacation</span>
+                                <span class="legend-item"><span class="color-dot personal"></span> Personal</span>
+                                <span class="legend-item"><span class="color-dot sick"></span> Sick</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-item recent-requests with-animation">
+                        <div class="card-header">
+                            <h3>Recent Requests</h3>
+                            <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                        <div class="card-content">
+                            <ul class="request-list">
+                                <li class="request-item">
+                                    <div class="request-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="request-details">
+                                        <p class="request-name">Alex Johnson</p>
+                                        <p class="request-info">Vacation: May 20-22</p>
+                                    </div>
+                                    <div class="request-actions">
+                                        <button class="btn-icon approve"><i class="fas fa-check"></i></button>
+                                        <button class="btn-icon reject"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </li>
+                                <li class="request-item">
+                                    <div class="request-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="request-details">
+                                        <p class="request-name">Sarah Miller</p>
+                                        <p class="request-info">Sick Leave: May 10</p>
+                                    </div>
+                                    <div class="request-actions">
+                                        <button class="btn-icon approve"><i class="fas fa-check"></i></button>
+                                        <button class="btn-icon reject"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </li>
+                                <li class="request-item">
+                                    <div class="request-avatar">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="request-details">
+                                        <p class="request-name">Michael Chen</p>
+                                        <p class="request-info">Personal Day: May 18</p>
+                                    </div>
+                                    <div class="request-actions">
+                                        <button class="btn-icon approve"><i class="fas fa-check"></i></button>
+                                        <button class="btn-icon reject"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-text">View All Requests</button>
+                        </div>
+                    </div>
+
+                    <div class="grid-item time-off-summary with-animation">
+                        <div class="card-header">
+                            <h3>Time Off Summary</h3>
+                            <div class="summary-filter">
+                                <select>
+                                    <option>This Year</option>
+                                    <option>Last Year</option>
+                                    <option>All Time</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="summary-chart">
+                                <!-- Chart would be rendered by JavaScript -->
+                                <div class="chart-placeholder">
+                                    <div class="chart-bar">
+                                        <div class="bar-fill vacation" style="height: 70%"></div>
+                                        <span class="bar-label">Vacation</span>
+                                    </div>
+                                    <div class="chart-bar">
+                                        <div class="bar-fill personal" style="height: 40%"></div>
+                                        <span class="bar-label">Personal</span>
+                                    </div>
+                                    <div class="chart-bar">
+                                        <div class="bar-fill sick" style="height: 25%"></div>
+                                        <span class="bar-label">Sick</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Employees Section -->
+            <section id="employees" class="content-section">
+                <div class="section-header">
+                    <h2>Employees</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Employee
+                    </button>
+                </div>
+
+                <div class="employee-filters">
+                    <div class="search-filter">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search employees...">
+                    </div>
+                    <div class="filter-options">
+                        <select>
+                            <option>All Departments</option>
+                            <option>Engineering</option>
+                            <option>Marketing</option>
+                            <option>Sales</option>
+                            <option>HR</option>
+                            <option>Finance</option>
+                            <option>Operations</option>
+                        </select>
+                        <select>
+                            <option>All Status</option>
+                            <option>Active</option>
+                            <option>On Leave</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="employee-list">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th>Vacation Days</th>
+                                <th>Personal Days</th>
+                                <th>Sick Days</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Employee rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn-icon pagination-prev"><i class="fas fa-chevron-left"></i></button>
+                    <span class="page-info">Page 1 of 1</span>
+                    <button class="btn-icon pagination-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Time-Off Requests Section -->
+            <section id="requests" class="content-section">
+                <div class="section-header">
+                    <h2>Time-Off Requests</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> New Request
+                    </button>
+                </div>
+
+                <div class="filter-tabs">
+                    <button class="filter-tab active">All Requests</button>
+                    <button class="filter-tab">Pending</button>
+                    <button class="filter-tab">Approved</button>
+                    <button class="filter-tab">Rejected</button>
+                </div>
+
+                <div class="request-filters">
+                    <div class="search-filter">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search requests...">
+                    </div>
+                    <div class="filter-options">
+                        <select>
+                            <option value="all">All Employees</option>
+                            <!-- Employee options will be populated by JavaScript -->
+                        </select>
+                        <select>
+                            <option value="all">All Types</option>
+                            <option value="vacation">Vacation</option>
+                            <option value="personal">Personal</option>
+                            <option value="sick">Sick</option>
+                        </select>
+                        <select>
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="denied">Denied</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <div class="date-range">
+                            <button class="btn btn-outline">
+                                <i class="fas fa-calendar"></i>
+                                <span>Date Range</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="requests-list">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Type</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Request rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn-icon pagination-prev"><i class="fas fa-chevron-left"></i></button>
+                    <span class="page-info">Page 1 of 1</span>
+                    <button class="btn-icon pagination-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Calendar Section -->
+            <section id="calendar" class="content-section">
+                <div class="section-header">
+                    <h2>Time-Off Calendar</h2>
+                    <div class="calendar-view-options">
+                        <button class="btn btn-outline active" data-view="month">Month</button>
+                        <button class="btn btn-outline" data-view="week">Week</button>
+                        <button class="btn btn-outline" data-view="day">Day</button>
+                    </div>
+                </div>
+
+                <div class="calendar-navigation">
+                    <button class="btn-icon"><i class="fas fa-chevron-left"></i></button>
+                    <h3 class="current-month">May 2025</h3>
+                    <button class="btn-icon"><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn btn-text">Today</button>
+                </div>
+
+                <div class="full-calendar calendar" data-view="month">
+                    <div class="calendar-header">
+                        <span>Sunday</span>
+                        <span>Monday</span>
+                        <span>Tuesday</span>
+                        <span>Wednesday</span>
+                        <span>Thursday</span>
+                        <span>Friday</span>
+                        <span>Saturday</span>
+                    </div>
+                    <div class="calendar-body calendar-grid">
+                        <!-- Calendar days will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="calendar-legend">
+                    <div class="legend-item">
+                        <span class="color-dot vacation"></span>
+                        <span>Vacation</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot personal"></span>
+                        <span>Personal</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot sick"></span>
+                        <span>Sick</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot pending"></span>
+                        <span>Pending</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                </div>
+
+                <div class="tab-container">
+                    <div class="tab-nav">
+                        <button class="tab active" data-tab="general">General</button>
+                        <button class="tab" data-tab="notifications">Notifications</button>
+                        <button class="tab" data-tab="timeoff-policies">Time-Off Policies</button>
+                        <button class="tab" data-tab="user-management">User Management</button>
+                    </div>
+
+                    <div class="tab-content active" data-tab="general">
+                        <h3>General Settings</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label for="company-name">Company Name</label>
+                                <input type="text" id="company-name" value="Your Company">
+                            </div>
+                            <div class="form-group">
+                                <label for="company-email">Company Email</label>
+                                <input type="email" id="company-email" value="hr@company.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="date-format">Date Format</label>
+                                <select id="date-format">
+                                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="time-zone">Time Zone</label>
+                                <select id="time-zone">
+                                    <option value="UTC">UTC</option>
+                                    <option value="EST">Eastern Time (EST)</option>
+                                    <option value="CST">Central Time (CST)</option>
+                                    <option value="MST">Mountain Time (MST)</option>
+                                    <option value="PST">Pacific Time (PST)</option>
+                                </select>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" data-tab="notifications">
+                        <h3>Notification Settings</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label>Email Notifications</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notify-new-request" checked>
+                                        <label for="notify-new-request">New time-off requests</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notify-status-change" checked>
+                                        <label for="notify-status-change">Request status changes</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="notify-upcoming">
+                                        <label for="notify-upcoming">Upcoming time-off reminders</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>In-App Notifications</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="app-new-request" checked>
+                                        <label for="app-new-request">New time-off requests</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="app-status-change" checked>
+                                        <label for="app-status-change">Request status changes</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="app-upcoming" checked>
+                                        <label for="app-upcoming">Upcoming time-off reminders</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" data-tab="timeoff-policies">
+                        <h3>Time-Off Policies</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label>Default Time-Off Allocation (Days)</label>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="default-vacation">Vacation</label>
+                                        <input type="number" id="default-vacation" value="15" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="default-personal">Personal</label>
+                                        <input type="number" id="default-personal" value="5" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="default-sick">Sick</label>
+                                        <input type="number" id="default-sick" value="10" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Minimum Advance Notice (Days)</label>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="notice-vacation">Vacation</label>
+                                        <input type="number" id="notice-vacation" value="14" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="notice-personal">Personal</label>
+                                        <input type="number" id="notice-personal" value="2" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="notice-sick">Sick</label>
+                                        <input type="number" id="notice-sick" value="0" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Maximum Consecutive Days</label>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="max-vacation">Vacation</label>
+                                        <input type="number" id="max-vacation" value="15" min="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="max-personal">Personal</label>
+                                        <input type="number" id="max-personal" value="2" min="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="max-sick">Sick</label>
+                                        <input type="number" id="max-sick" value="5" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" data-tab="user-management">
+                        <h3>User Management</h3>
+                        <div class="user-list">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="user-cell">
+                                            <div class="employee-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div class="employee-info">
+                                                <p class="employee-name">Admin User</p>
+                                            </div>
+                                        </td>
+                                        <td>admin@company.com</td>
+                                        <td>Administrator</td>
+                                        <td><span class="status-badge active">Active</span></td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                            <button class="btn-icon"><i class="fas fa-key"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="user-cell">
+                                            <div class="employee-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div class="employee-info">
+                                                <p class="employee-name">HR Manager</p>
+                                            </div>
+                                        </td>
+                                        <td>hr@company.com</td>
+                                        <td>HR Manager</td>
+                                        <td><span class="status-badge active">Active</span></td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                            <button class="btn-icon"><i class="fas fa-key"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add User
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Modal for adding/editing employees -->
+        <div class="modal" id="employeeModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Employee</h3>
+                    <button class="close-modal"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form class="employee-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employee-first-name">First Name</label>
+                                <input type="text" id="employee-first-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="employee-last-name">Last Name</label>
+                                <input type="text" id="employee-last-name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="employee-email">Email</label>
+                            <input type="email" id="employee-email" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employee-department">Department</label>
+                                <select id="employee-department" required>
+                                    <option value="">Select Department</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="sales">Sales</option>
+                                    <option value="hr">HR</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="operations">Operations</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="employee-position">Position</label>
+                                <input type="text" id="employee-position" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employee-start-date">Start Date</label>
+                                <div class="date-input">
+                                    <input type="date" id="employee-start-date" required>
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="employee-status">Status</label>
+                                <select id="employee-status" required>
+                                    <option value="active">Active</option>
+                                    <option value="on-leave">On Leave</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employee-vacation-days">Vacation Days</label>
+                                <input type="number" id="employee-vacation-days" min="0" value="15" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="employee-personal-days">Personal Days</label>
+                                <input type="number" id="employee-personal-days" min="0" value="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="employee-sick-days">Sick Days</label>
+                                <input type="number" id="employee-sick-days" min="0" value="8" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline">Cancel</button>
+                    <button class="btn btn-primary">Save Employee</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for adding/editing time-off requests -->
+        <div class="modal" id="requestModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>New Time-Off Request</h3>
+                    <button class="close-modal"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form class="request-form">
+                        <div class="form-group">
+                            <label for="request-employee">Employee</label>
+                            <select id="request-employee" required>
+                                <!-- Employee options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="request-type">Request Type</label>
+                                <select id="request-type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="vacation">Vacation</option>
+                                    <option value="personal">Personal</option>
+                                    <option value="sick">Sick Leave</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="request-status">Status</label>
+                                <select id="request-status">
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="denied">Denied</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="request-start-date">Start Date</label>
+                                <div class="date-input">
+                                    <input type="date" id="request-start-date" required>
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="request-end-date">End Date</label>
+                                <div class="date-input">
+                                    <input type="date" id="request-end-date" required>
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="request-days">Days</label>
+                                <input type="number" id="request-days" min="1" value="1" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Available Days</label>
+                                <p><span id="available-days">0</span> days remaining</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="request-notes">Notes (Optional)</label>
+                            <textarea id="request-notes" rows="3" placeholder="Provide additional details about your request"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline">Cancel</button>
+                    <button class="btn btn-primary">Submit Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
